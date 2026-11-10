@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8"/>
-  <!-- Ruto / Zora related or cyan symbol -->
-  <circle cx="100" cy="100" r="50" fill="none" stroke="white" stroke-width="12"/>
-  <path d="M60 100 Q80 60 100 80 Q120 100 140 80 Q160 100 140 120 Q120 140 100 120 Q80 100 60 100" fill="white"/>
-  <circle cx="100" cy="100" r="12" fill="white"/>
-</svg>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8"/>
-  <!-- Nayru: three overlapping circles in triangle formation -->
-  <circle cx="100" cy="65" r="32" fill="white"/>
-  <circle cx="70" cy="125" r="32" fill="white"/>
-  <circle cx="130" cy="125" r="32" fill="white"/>
-</svg>

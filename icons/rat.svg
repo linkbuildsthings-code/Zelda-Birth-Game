@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8"/>
-  <!-- Minish - small / simplified -->
-  <circle cx="100" cy="80" r="20" fill="white"/>
-  <path d="M80 100 L100 140 L120 100" fill="white"/>
-  <circle cx="70" cy="120" r="8" fill="white"/>
-  <circle cx="130" cy="120" r="8" fill="white"/>
-</svg>

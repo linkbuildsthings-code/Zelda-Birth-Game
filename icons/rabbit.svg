@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8"/>
-  <!-- Kokiri - swirl -->
-  <path d="M100 60 Q140 70 130 110 Q120 150 80 140 Q40 130 50 90 Q60 50 100 60" fill="white"/>
-  <path d="M100 80 Q120 90 115 110 Q110 130 90 125 Q70 120 75 100 Q80 80 100 80" fill="none" stroke="white" stroke-width="8"/>
-</svg>

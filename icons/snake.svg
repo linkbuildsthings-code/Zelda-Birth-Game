@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8"/>
-  <!-- Twili - simplified from cyan circular -->
-  <circle cx="100" cy="100" r="55" fill="none" stroke="white" stroke-width="10"/>
-  <path d="M50 100 L70 70 L100 90 L130 70 L150 100 L130 130 L100 110 L70 130 Z" fill="white"/>
-  <circle cx="100" cy="100" r="15" fill="white"/>
-</svg>

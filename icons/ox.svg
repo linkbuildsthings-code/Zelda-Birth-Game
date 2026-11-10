@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8"/>
-  <!-- Goron - spiked diamond -->
-  <polygon points="100,40 130,70 160,100 130,130 100,160 70,130 40,100 70,70" fill="white"/>
-  <polygon points="100,55 115,75 100,95 85,75" fill="none" stroke="white" stroke-width="4"/>
-</svg>

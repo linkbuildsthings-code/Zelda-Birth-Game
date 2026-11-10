@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8"/>
-  <!-- Zora - three pronged / biohazard-like -->
-  <path d="M100 50 Q130 70 120 100 Q110 130 100 150 Q90 130 80 100 Q70 70 100 50" fill="white"/>
-  <path d="M60 120 Q80 90 100 110 Q120 130 140 120 Q120 150 100 140 Q80 150 60 120" fill="white"/>
-  <path d="M140 80 Q120 110 100 90 Q80 70 60 80 Q80 50 100 60 Q120 50 140 80" fill="white"/>
-</svg>
