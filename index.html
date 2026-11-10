@@ -153,7 +153,7 @@ footer{margin-top:2.5rem;font-size:.85rem;color:var(--soft)}
 
   <details class="manage" id="manage">
     <summary>Card art</summary>
-    <p>Add an image from your phone for any game. Images you add here are saved on this device only. To show art to everyone, put files named 1.jpg to 24.jpg in the site’s images folder.</p>
+    <p>Add an image from your phone for any game. Images you add here are saved on this device only. To show art to everyone, put files named 1 to 24 (.jpg, .jpeg or .png) in the site’s images folder.</p>
     <p class="status" id="artStatus" hidden></p>
     <ul class="artlist" id="artlist"></ul>
   </details>
@@ -333,10 +333,17 @@ function applyArt(g){
   const img = $("art"), local = art[g];
   const set = (on) => { img.hidden = !on; $("card").classList.toggle("has-art", on); };
   $("cardArt").textContent = local ? "Change art for this game" : "Add art for this game";
+  const tries = local ? [local] : ["jpg", "jpeg", "png", "JPG", "JPEG", "PNG"].map(ext => `images/${g + 1}.${ext}`);
+  let i = 0;
   img.onload = () => { if (currentGame === g) set(true); };
-  img.onerror = () => { if (currentGame === g) { img.removeAttribute("src"); set(false); } };
+  img.onerror = () => {
+    if (currentGame !== g) return;
+    i++;
+    if (i < tries.length) img.src = tries[i];
+    else { img.removeAttribute("src"); set(false); }
+  };
   set(false);
-  img.src = local || `images/${g + 1}.jpg`;
+  img.src = tries[0];
 }
 
 function renderList(){
