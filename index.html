@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your Zelda birth game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#efe4cc; --ink:#2a1b3d; --soft:#6b5a7a; --line:#c9b48a;
+  --gold:#a37b22; --field:#f8f1e1; --card-ink:#fbf4e4;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1d1430; --ink:#f1e6cd; --soft:#b9a9c9; --line:#4a3a62;
+    --gold:#d6b25a; --field:#2a1f40; --card-ink:#fbf4e4; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1d1430; --ink:#f1e6cd; --soft:#b9a9c9; --line:#4a3a62;
+  --gold:#d6b25a; --field:#2a1f40; --card-ink:#fbf4e4; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:Spectral,Georgia,"Times New Roman",serif;font-size:1.0625rem;line-height:1.55;
+  -webkit-text-size-adjust:100%}
+main{max-width:30rem;margin:0 auto;padding:2rem 1.25rem 3rem}
+h1{font-family:Cinzel,"Trajan Pro",Georgia,serif;font-weight:700;font-size:clamp(1.9rem,8vw,2.5rem);
+  line-height:1.1;margin:0 0 .5rem;letter-spacing:.02em}
+.lede{margin:0 0 1.75rem;color:var(--soft)}
+.pickers{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+label{display:block;font-weight:600;font-size:.95rem;margin-bottom:.35rem}
+select{width:100%;font:inherit;font-size:1rem;color:var(--ink);background:var(--field);
+  border:1.5px solid var(--line);border-radius:.6rem;padding:.7rem 2rem .7rem .75rem;
+  appearance:none;-webkit-appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);
+  background-position:calc(100% - 1.1rem) 52%,calc(100% - .75rem) 52%;
+  background-size:.35rem .35rem;background-repeat:no-repeat}
+select:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.ask{margin-top:1.25rem;padding:1rem;border:1.5px dashed var(--line);border-radius:.6rem}
+.ask p{margin:0 0 .75rem}
+.ask .why{font-size:.9rem;color:var(--soft);margin:.6rem 0 0}
+.choices{display:flex;gap:.5rem}
+.choices button{flex:1;font:inherit;font-size:1rem;color:var(--ink);background:var(--field);
+  border:1.5px solid var(--line);border-radius:.6rem;padding:.6rem;cursor:pointer}
+.choices button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{margin-top:2rem;text-align:center;color:var(--soft);font-style:italic}
+
+.card{--h:200;margin:2rem auto 0;max-width:20rem;aspect-ratio:2/3.2;position:relative;
+  border-radius:1rem;color:var(--card-ink);padding:1.4rem 1.25rem;
+  background:
+    radial-gradient(120% 70% at 50% 0%,hsl(var(--h) 55% 42%) 0%,transparent 70%),
+    linear-gradient(180deg,hsl(var(--h) 45% 22%),hsl(calc(var(--h) + 40) 40% 12%));
+  box-shadow:0 1.2rem 2.5rem -1rem hsl(var(--h) 60% 10% / .7);
+  display:flex;flex-direction:column;align-items:center;text-align:center;overflow:hidden}
+.card::before{content:"";position:absolute;inset:.55rem;border:1.5px solid hsl(45 70% 70% / .55);border-radius:.6rem;pointer-events:none}
+.card::after{content:"";position:absolute;inset:.85rem;border:1px solid hsl(45 70% 70% / .25);border-radius:.4rem;pointer-events:none}
+.card.reveal{animation:flip .6s cubic-bezier(.2,.8,.2,1)}
+@keyframes flip{from{transform:perspective(800px) rotateY(80deg);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.card.reveal{animation:none}}
+.sigil{font-size:2.6rem;line-height:1;margin-top:.9rem;display:flex;gap:.6rem;align-items:center}
+.sigil .glyph{font-family:"Segoe UI Symbol","Apple Symbols","Noto Sans Symbols",serif;color:hsl(45 80% 75%)}
+.creature{font-family:Cinzel,Georgia,serif;font-size:1rem;margin:.6rem 0 0;color:hsl(45 70% 80%);letter-spacing:.04em}
+.star{width:4.5rem;height:4.5rem;margin:auto 0 .4rem;opacity:.85}
+.title{font-family:Cinzel,Georgia,serif;font-weight:700;font-size:1.45rem;line-height:1.15;margin:0}
+.series{font-size:.85rem;opacity:.75;margin:0 0 .25rem;font-style:italic}
+.meta{margin:.5rem 0 1rem;font-size:.95rem;opacity:.9}
+.era{margin-top:auto;font-size:.85rem;opacity:.8;margin-bottom:.6rem}
+
+.share{margin-top:1.75rem}
+.share h2{font-family:Cinzel,Georgia,serif;font-size:1.05rem;margin:0 0 .6rem}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;padding:0;margin:0;list-style:none}
+.chips li{background:var(--field);border:1px solid var(--line);border-radius:999px;padding:.25rem .7rem;font-size:.92rem}
+.chips li.you{border-color:var(--gold);border-width:2px;font-weight:600}
+footer{margin-top:2.5rem;font-size:.85rem;color:var(--soft)}
+.card.has-art{aspect-ratio:auto}
+.card.has-art .star{display:none}
+.art{width:100%;border-radius:.5rem;margin:.75rem 0 .5rem;display:block;position:relative;z-index:1}
+.cardart{text-align:center;margin:.9rem 0 0}
+.manage{margin-top:2rem;border-top:1.5px solid var(--line);padding-top:1rem}
+.manage summary{font-family:Cinzel,Georgia,serif;font-weight:700;cursor:pointer;padding:.25rem 0}
+.manage p{color:var(--soft);font-size:.95rem;margin:.5rem 0 1rem}
+.artlist{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
+.artlist li{display:grid;grid-template-columns:3rem 1fr auto;gap:.6rem;align-items:center}
+.thumb{width:3rem;height:4rem;border-radius:.35rem;background:var(--field);border:1px solid var(--line);object-fit:cover;display:block}
+.artlist .name{font-size:.95rem;line-height:1.3}
+.btns{display:flex;gap:.35rem}
+.small{font:inherit;font-size:.9rem;color:var(--ink);background:var(--field);border:1.5px solid var(--line);border-radius:.5rem;padding:.45rem .7rem;cursor:pointer}
+.small:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.status{color:var(--ink)!important;font-weight:600}
+.visually-hidden{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <h1>Your Zelda birth game</h1>
+  <p class="lede">Your star sign and Chinese zodiac animal point to one of 24 Zelda games. Every game is shared by exactly six sign-and-animal pairs.</p>
+
+  <div class="pickers">
+    <div>
+      <label for="sign">Star sign</label>
+      <select id="sign"><option value="">Choose</option></select>
+    </div>
+    <div>
+      <label for="year">Birth year</label>
+      <select id="year"><option value="">Choose</option></select>
+    </div>
+  </div>
+
+  <div class="ask" id="ask" hidden>
+    <p id="askText"></p>
+    <div class="choices">
+      <button type="button" id="optA" aria-pressed="false"></button>
+      <button type="button" id="optB" aria-pressed="false"></button>
+    </div>
+    <p class="why" id="askWhy"></p>
+  </div>
+
+  <p class="hint" id="hint">Pick your sign and year to draw your card.</p>
+
+  <div id="result" hidden>
+    <article class="card" id="card" aria-live="polite">
+      <div class="sigil"><span class="glyph" id="glyph"></span><span id="emoji"></span></div>
+      <p class="creature" id="creature"></p>
+      <svg class="star" viewBox="0 0 100 100" aria-hidden="true">
+        <g fill="none" stroke="hsl(45 80% 75%)" stroke-width="1.5">
+          <circle cx="50" cy="50" r="44"/>
+          <polygon id="poly" points=""/>
+          <circle cx="50" cy="50" r="6" fill="hsl(45 80% 75%)"/>
+        </g>
+      </svg>
+      <p class="series" id="series"></p>
+      <h2 class="title" id="title"></h2>
+      <img class="art" id="art" alt="" hidden>
+      <p class="meta" id="meta"></p>
+      <p class="era" id="era"></p>
+    </article>
+    <p class="cardart"><button type="button" class="small" id="cardArt">Add art for this game</button></p>
+
+    <section class="share">
+      <h2>Everyone who shares this game</h2>
+      <ul class="chips" id="chips"></ul>
+    </section>
+  </div>
+
+  <details class="manage" id="manage">
+    <summary>Card art</summary>
+    <p>Add an image from your phone for any game. Images you add here are saved on this device only. To show art to everyone, put files named 1.jpg to 24.jpg in the site’s images folder.</p>
+    <p class="status" id="artStatus" hidden></p>
+    <ul class="artlist" id="artlist"></ul>
+  </details>
+  <input type="file" id="picker" accept="image/*" class="visually-hidden" tabindex="-1" aria-hidden="true">
+
+  <footer>Chinese zodiac years begin at Lunar New Year, so some January and February birthdays belong to the previous animal. The page will ask when that matters.</footer>
+</main>
+
+<script>
+const SIGNS = [
+  {n:"Aries",g:"♈",c:"Ram",s:321,e:419,r:"Mar 21 – Apr 19"},
+  {n:"Taurus",g:"♉",c:"Bull",s:420,e:520,r:"Apr 20 – May 20"},
+  {n:"Gemini",g:"♊",c:"Twins",s:521,e:620,r:"May 21 – Jun 20"},
+  {n:"Cancer",g:"♋",c:"Crab",s:621,e:722,r:"Jun 21 – Jul 22"},
+  {n:"Leo",g:"♌",c:"Lion",s:723,e:822,r:"Jul 23 – Aug 22"},
+  {n:"Virgo",g:"♍",c:"Maiden",s:823,e:922,r:"Aug 23 – Sep 22"},
+  {n:"Libra",g:"♎",c:"Scales",s:923,e:1022,r:"Sep 23 – Oct 22"},
+  {n:"Scorpio",g:"♏",c:"Scorpion",s:1023,e:1121,r:"Oct 23 – Nov 21"},
+  {n:"Sagittarius",g:"♐",c:"Archer",s:1122,e:1221,r:"Nov 22 – Dec 21"},
+  {n:"Capricorn",g:"♑",c:"Sea-goat",s:1222,e:119,r:"Dec 22 – Jan 19"},
+  {n:"Aquarius",g:"♒",c:"Water-bearer",s:120,e:218,r:"Jan 20 – Feb 18"},
+  {n:"Pisces",g:"♓",c:"Fish",s:219,e:320,r:"Feb 19 – Mar 20"}
+];
+const ANIMALS = [
+  ["Rat","🐀"],["Ox","🐂"],["Tiger","🐅"],["Rabbit","🐇"],["Dragon","🐉"],["Snake","🐍"],
+  ["Horse","🐎"],["Goat","🐐"],["Monkey","🐒"],["Rooster","🐓"],["Dog","🐕"],["Pig","🐖"]
+];
+const GAMES = [
+  ["The Legend of Zelda","",1986],
+  ["Zelda II: The Adventure of Link","",1987],
+  ["A Link to the Past","The Legend of Zelda",1991],
+  ["Link’s Awakening","The Legend of Zelda",1993],
+  ["The Wand of Gamelon","Zelda",1993],
+  ["The Faces of Evil","Link",1993],
+  ["Ocarina of Time","The Legend of Zelda",1998],
+  ["Majora’s Mask","The Legend of Zelda",2000],
+  ["Oracle of Seasons","The Legend of Zelda",2001],
+  ["Oracle of Ages","The Legend of Zelda",2001],
+  ["Four Swords","The Legend of Zelda",2002],
+  ["The Wind Waker","The Legend of Zelda",2002],
+  ["Four Swords Adventures","The Legend of Zelda",2004],
+  ["The Minish Cap","The Legend of Zelda",2004],
+  ["Twilight Princess","The Legend of Zelda",2006],
+  ["Phantom Hourglass","The Legend of Zelda",2007],
+  ["Spirit Tracks","The Legend of Zelda",2009],
+  ["Skyward Sword","The Legend of Zelda",2011],
+  ["A Link Between Worlds","The Legend of Zelda",2013],
+  ["Hyrule Warriors","",2014],
+  ["Tri Force Heroes","The Legend of Zelda",2015],
+  ["Breath of the Wild","The Legend of Zelda",2017],
+  ["Tears of the Kingdom","The Legend of Zelda",2023],
+  ["Echoes of Wisdom","The Legend of Zelda",2024]
+];
+// Lunar New Year dates (MDD) for 1920–2026
+const LNY_START = 1920;
+const LNY = "220,208,128,216,205,124,213,202,123,210,130,217,206,126,214,204,124,211,131,219,208,127,215,205,125,213,202,122,210,129,217,206,127,214,203,124,212,131,218,208,128,215,205,125,213,202,121,209,130,217,206,127,215,203,123,211,131,218,207,128,216,205,125,213,202,220,209,129,217,206,127,215,204,123,210,131,219,207,128,216,205,124,212,201,122,209,129,218,207,126,214,203,123,210,131,219,208,128,216,205,125,212,201,122,210,129,217".split(",").map(Number);
+const MONTHS = ["","Jan","Feb","Mar"];
+
+const $ = id => document.getElementById(id);
+const signSel = $("sign"), yearSel = $("year");
+SIGNS.forEach((s,i)=>signSel.add(new Option(`${s.g} ${s.n} (${s.r})`, i)));
+for (let y = 2026; y >= 1920; y--) yearSel.add(new Option(y, y));
+
+let answer = null; // "A" or "B"
+
+const animalOf = y => ((y - 1900) % 12 + 12) % 12;
+// Hand-picked swaps: Leo Snake ↔ Capricorn Snake (Twilight Princess / Breath of the Wild)
+const OVERRIDES = {"4-5":14, "9-5":21};
+const gameOf = (w,c) => OVERRIDES[`${w}-${c}`] ?? (((w + c) % 12) + (c % 2 ? 12 : 0));
+const fmt = mdd => `${MONTHS[Math.floor(mdd/100)]} ${mdd % 100}`;
+
+// Returns {animalYear} or {ask:{text,a,b,why,yearIfA,yearIfB}}
+function resolve(w, y){
+  const L = LNY[y - LNY_START];
+  if (w === 9) {
+    return {ask:{text:`Were you born in December ${y} or January ${y}?`, a:`December`, b:`January`,
+      why:`January births come before Lunar New Year, so they take the previous year’s animal.`,
+      yearIfA:y, yearIfB:y-1}};
+  }
+  const s = SIGNS[w];
+  if (L <= s.s) return {animalYear:y};
+  if (L > s.e) return {animalYear:y-1};
+  return {ask:{text:`Lunar New Year ${y} fell on ${fmt(L)}. Were you born before it?`, a:`Before ${fmt(L)}`, b:`${fmt(L)} or later`,
+    why:`Birthdays before Lunar New Year take the previous year’s animal.`, yearIfA:y-1, yearIfB:y}};
+}
+
+function setStar(i){
+  const pts = 5 + (i % 4); // 5–8 points, varies by game
+  const out = [];
+  for (let k = 0; k < pts*2; k++){
+    const r = k % 2 ? 16 : 36, a = Math.PI * k / pts - Math.PI/2;
+    out.push(`${(50 + r*Math.cos(a)).toFixed(1)},${(50 + r*Math.sin(a)).toFixed(1)}`);
+  }
+  $("poly").setAttribute("points", out.join(" "));
+}
+
+let lastKey = "";
+function render(){
+  const wv = signSel.value, yv = yearSel.value;
+  const ask = $("ask");
+  if (wv === "" || yv === "") { ask.hidden = true; show(null); return; }
+  const w = +wv, y = +yv, r = resolve(w, y);
+  let animalYear = r.animalYear;
+  if (r.ask) {
+    ask.hidden = false;
+    $("askText").textContent = r.ask.text;
+    $("optA").textContent = r.ask.a;
+    $("optB").textContent = r.ask.b;
+    $("askWhy").textContent = r.ask.why;
+    $("optA").setAttribute("aria-pressed", answer === "A");
+    $("optB").setAttribute("aria-pressed", answer === "B");
+    if (!answer) { show(null, "Answer the question above to draw your card."); return; }
+    animalYear = answer === "A" ? r.ask.yearIfA : r.ask.yearIfB;
+  } else {
+    ask.hidden = true;
+  }
+  const c = animalOf(animalYear), g = gameOf(w, c);
+  show({w, c, g});
+}
+
+function show(res, msg){
+  $("hint").hidden = !!res;
+  $("hint").textContent = msg || "Pick your sign and year to draw your card.";
+  $("result").hidden = !res;
+  if (!res) { lastKey = ""; return; }
+  const {w,c,g} = res, game = GAMES[g], s = SIGNS[w], a = ANIMALS[c];
+  const card = $("card");
+  card.style.setProperty("--h", Math.round((g * 137.5) % 360));
+  $("glyph").textContent = s.g;
+  $("emoji").textContent = a[1];
+  $("creature").textContent = `${s.c} ${a[0]}`;
+  $("series").textContent = game[1];
+  $("series").hidden = !game[1];
+  $("title").textContent = game[0];
+  applyArt(g);
+  $("meta").textContent = `Game ${g + 1} of 24, released ${game[2]}`;
+  $("era").textContent = c % 2
+    ? `${a[0]} is a yin animal, so you draw from the modern era (2004–2024).`
+    : `${a[0]} is a yang animal, so you draw from the classic era (1986–2002).`;
+  setStar(g);
+  const chips = $("chips"); chips.innerHTML = "";
+  for (let cc = 0; cc < 12; cc++) for (let ww = 0; ww < 12; ww++) {
+    if (gameOf(ww, cc) !== g) continue;
+    const li = document.createElement("li");
+    li.textContent = `${SIGNS[ww].g} ${SIGNS[ww].n} ${ANIMALS[cc][1]} ${ANIMALS[cc][0]}`;
+    if (ww === w && cc === c) li.className = "you";
+    chips.appendChild(li);
+  }
+  const key = `${w}-${c}`;
+  if (key !== lastKey) { card.classList.remove("reveal"); void card.offsetWidth; card.classList.add("reveal"); lastKey = key; }
+}
+
+// ---- Card art, stored on this device only ----
+const art = {};
+let currentGame = null, pickFor = null, dbp = null;
+
+function db(){
+  if (!dbp) dbp = new Promise((res, rej) => {
+    const r = indexedDB.open("birthgame-art", 1);
+    r.onupgradeneeded = () => r.result.createObjectStore("art");
+    r.onsuccess = () => res(r.result);
+    r.onerror = () => rej(r.error);
+  });
+  return dbp;
+}
+
+function showStatus(msg){
+  const s = $("artStatus");
+  s.textContent = msg || "";
+  s.hidden = !msg;
+  if (msg) $("manage").open = true;
+}
+
+// Device art wins; otherwise try images/<number>.jpg from the site itself.
+function applyArt(g){
+  currentGame = g;
+  const img = $("art"), local = art[g];
+  const set = (on) => { img.hidden = !on; $("card").classList.toggle("has-art", on); };
+  $("cardArt").textContent = local ? "Change art for this game" : "Add art for this game";
+  img.onload = () => { if (currentGame === g) set(true); };
+  img.onerror = () => { if (currentGame === g) { img.removeAttribute("src"); set(false); } };
+  set(false);
+  img.src = local || `images/${g + 1}.jpg`;
+}
+
+function renderList(){
+  const ul = $("artlist");
+  ul.innerHTML = "";
+  GAMES.forEach((game, g) => {
+    const li = document.createElement("li");
+    const th = document.createElement(art[g] ? "img" : "div");
+    th.className = "thumb";
+    if (art[g]) { th.src = art[g]; th.alt = ""; }
+    const nm = document.createElement("span");
+    nm.className = "name";
+    nm.textContent = `${g + 1}. ${game[0]}`;
+    const btns = document.createElement("span");
+    btns.className = "btns";
+    const add = document.createElement("button");
+    add.type = "button"; add.className = "small";
+    add.textContent = art[g] ? "Change" : "Add";
+    add.addEventListener("click", () => pick(g));
+    btns.append(add);
+    if (art[g]) {
+      const rm = document.createElement("button");
+      rm.type = "button"; rm.className = "small"; rm.textContent = "Remove";
+      rm.addEventListener("click", () => saveArt(g, null));
+      btns.append(rm);
+    }
+    li.append(th, nm, btns);
+    ul.append(li);
+  });
+}
+
+async function loadArt(){
+  try {
+    const d = await db();
+    await new Promise((res, rej) => {
+      const tx = d.transaction("art", "readonly"), st = tx.objectStore("art");
+      for (let g = 0; g < 24; g++) {
+        const r = st.get(g);
+        r.onsuccess = () => { if (r.result) art[g] = r.result; };
+      }
+      tx.oncomplete = res;
+      tx.onerror = () => rej(tx.error);
+    });
+  } catch (e) { /* storage unavailable: art lasts for this visit only */ }
+  renderList();
+  if (currentGame !== null) applyArt(currentGame);
+}
+
+async function saveArt(g, url){
+  if (url) art[g] = url; else delete art[g];
+  renderList();
+  if (currentGame === g) applyArt(g);
+  showStatus("");
+  try {
+    const d = await db();
+    await new Promise((res, rej) => {
+      const tx = d.transaction("art", "readwrite"), st = tx.objectStore("art");
+      if (url) st.put(url, g); else st.delete(g);
+      tx.oncomplete = res;
+      tx.onerror = () => rej(tx.error);
+    });
+  } catch (e) {
+    showStatus("This image couldn’t be saved on this device. It will show until you close the page.");
+  }
+}
+
+function shrink(file){
+  return new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onload = () => {
+      const im = new Image();
+      im.onload = () => {
+        const s = Math.min(1, 1000 / Math.max(im.width, im.height));
+        const c = document.createElement("canvas");
+        c.width = Math.round(im.width * s); c.height = Math.round(im.height * s);
+        c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+        res(c.toDataURL("image/jpeg", 0.85));
+      };
+      im.onerror = () => rej(new Error("That file couldn’t be read as an image. Try a JPG or PNG."));
+      im.src = fr.result;
+    };
+    fr.onerror = () => rej(new Error("That file couldn’t be opened. Try choosing it again."));
+    fr.readAsDataURL(file);
+  });
+}
+
+function pick(g){ pickFor = g; $("picker").click(); }
+
+$("picker").addEventListener("change", async (e) => {
+  const f = e.target.files[0];
+  e.target.value = "";
+  if (!f || pickFor === null) return;
+  try { await saveArt(pickFor, await shrink(f)); }
+  catch (err) { showStatus(err.message); }
+});
+$("cardArt").addEventListener("click", () => { if (currentGame !== null) pick(currentGame); });
+
+loadArt();
+
+signSel.addEventListener("change", ()=>{ answer = null; render(); });
+yearSel.addEventListener("change", ()=>{ answer = null; render(); });
+$("optA").addEventListener("click", ()=>{ answer = "A"; render(); });
+$("optB").addEventListener("click", ()=>{ answer = "B"; render(); });
+</script>
+</body>
+</html>
