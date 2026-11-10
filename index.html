@@ -12,19 +12,18 @@
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
-  --bg:#efe4cc; --ink:#2a1b3d; --soft:#6b5a7a; --line:#c9b48a;
-  --gold:#a37b22; --field:#f8f1e1; --card-ink:#fbf4e4;
-  color-scheme:light;
+  --bg:#0e1f17; --ink:#efe6cf; --soft:#a8b9a4; --line:#2e4a3a;
+    --gold:#d6b25a; --field:#163024; --card-ink:#fbf4e4; color-scheme:dark;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#1d1430; --ink:#f1e6cd; --soft:#b9a9c9; --line:#4a3a62;
-    --gold:#d6b25a; --field:#2a1f40; --card-ink:#fbf4e4; color-scheme:dark;
+    --bg:#0e1f17; --ink:#efe6cf; --soft:#a8b9a4; --line:#2e4a3a;
+    --gold:#d6b25a; --field:#163024; --card-ink:#fbf4e4; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#1d1430; --ink:#f1e6cd; --soft:#b9a9c9; --line:#4a3a62;
-  --gold:#d6b25a; --field:#2a1f40; --card-ink:#fbf4e4; color-scheme:dark;
+  --bg:#0e1f17; --ink:#efe6cf; --soft:#a8b9a4; --line:#2e4a3a;
+    --gold:#d6b25a; --field:#163024; --card-ink:#fbf4e4; color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -77,25 +76,14 @@ select:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-
 .share{margin-top:1.75rem}
 .share h2{font-family:Cinzel,Georgia,serif;font-size:1.05rem;margin:0 0 .6rem}
 .chips{display:flex;flex-wrap:wrap;gap:.4rem;padding:0;margin:0;list-style:none}
-.chips li{background:var(--field);border:1px solid var(--line);border-radius:999px;padding:.25rem .7rem;font-size:.92rem}
+.chips li{background:var(--field);border:1px solid var(--line);border-radius:999px;padding:.25rem .7rem;font-size:.92rem;display:inline-flex;align-items:center;gap:.3rem}
+.ico{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;line-height:1}
+.ico img{width:1.3em;height:1.3em;object-fit:contain;display:block}
 .chips li.you{border-color:var(--gold);border-width:2px;font-weight:600}
 footer{margin-top:2.5rem;font-size:.85rem;color:var(--soft)}
 .card.has-art{aspect-ratio:auto}
 .card.has-art .star{display:none}
 .art{width:100%;border-radius:.5rem;margin:.75rem 0 .5rem;display:block;position:relative;z-index:1}
-.cardart{text-align:center;margin:.9rem 0 0}
-.manage{margin-top:2rem;border-top:1.5px solid var(--line);padding-top:1rem}
-.manage summary{font-family:Cinzel,Georgia,serif;font-weight:700;cursor:pointer;padding:.25rem 0}
-.manage p{color:var(--soft);font-size:.95rem;margin:.5rem 0 1rem}
-.artlist{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
-.artlist li{display:grid;grid-template-columns:3rem 1fr auto;gap:.6rem;align-items:center}
-.thumb{width:3rem;height:4rem;border-radius:.35rem;background:var(--field);border:1px solid var(--line);object-fit:cover;display:block}
-.artlist .name{font-size:.95rem;line-height:1.3}
-.btns{display:flex;gap:.35rem}
-.small{font:inherit;font-size:.9rem;color:var(--ink);background:var(--field);border:1.5px solid var(--line);border-radius:.5rem;padding:.45rem .7rem;cursor:pointer}
-.small:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.status{color:var(--ink)!important;font-weight:600}
-.visually-hidden{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden}
 [hidden]{display:none!important}
 </style>
 </head>
@@ -143,21 +131,12 @@ footer{margin-top:2.5rem;font-size:.85rem;color:var(--soft)}
       <p class="meta" id="meta"></p>
       <p class="era" id="era"></p>
     </article>
-    <p class="cardart"><button type="button" class="small" id="cardArt">Add art for this game</button></p>
 
     <section class="share">
       <h2>Everyone who shares this game</h2>
       <ul class="chips" id="chips"></ul>
     </section>
   </div>
-
-  <details class="manage" id="manage">
-    <summary>Card art</summary>
-    <p>Add an image from your phone for any game. Images you add here are saved on this device only. To show art to everyone, put files named 1 to 24 (.jpg, .jpeg or .png) in the site’s images folder.</p>
-    <p class="status" id="artStatus" hidden></p>
-    <ul class="artlist" id="artlist"></ul>
-  </details>
-  <input type="file" id="picker" accept="image/*" class="visually-hidden" tabindex="-1" aria-hidden="true">
 
   <footer>Chinese zodiac years begin at Lunar New Year, so some January and February birthdays belong to the previous animal. The page will ask when that matters.</footer>
 </main>
@@ -282,8 +261,8 @@ function show(res, msg){
   const {w,c,g} = res, game = GAMES[g], s = SIGNS[w], a = ANIMALS[c];
   const card = $("card");
   card.style.setProperty("--h", Math.round((g * 137.5) % 360));
-  $("glyph").textContent = s.g;
-  $("emoji").textContent = a[1];
+  $("glyph").replaceChildren(icon(s.n.toLowerCase(), s.g));
+  $("emoji").replaceChildren(icon(a[0].toLowerCase(), a[1]));
   $("creature").textContent = `${s.c} ${a[0]}`;
   $("series").textContent = game[1];
   $("series").hidden = !game[1];
@@ -298,7 +277,7 @@ function show(res, msg){
   for (let cc = 0; cc < 12; cc++) for (let ww = 0; ww < 12; ww++) {
     if (gameOf(ww, cc) !== g) continue;
     const li = document.createElement("li");
-    li.textContent = `${SIGNS[ww].g} ${SIGNS[ww].n} ${ANIMALS[cc][1]} ${ANIMALS[cc][0]}`;
+    li.append(icon(SIGNS[ww].n.toLowerCase(), SIGNS[ww].g), ` ${SIGNS[ww].n} `, icon(ANIMALS[cc][0].toLowerCase(), ANIMALS[cc][1]), ` ${ANIMALS[cc][0]}`);
     if (ww === w && cc === c) li.className = "you";
     chips.appendChild(li);
   }
@@ -306,34 +285,39 @@ function show(res, msg){
   if (key !== lastKey) { card.classList.remove("reveal"); void card.offsetWidth; card.classList.add("reveal"); lastKey = key; }
 }
 
-// ---- Card art, stored on this device only ----
-const art = {};
-let currentGame = null, pickFor = null, dbp = null;
-
-function db(){
-  if (!dbp) dbp = new Promise((res, rej) => {
-    const r = indexedDB.open("birthgame-art", 1);
-    r.onupgradeneeded = () => r.result.createObjectStore("art");
-    r.onsuccess = () => res(r.result);
-    r.onerror = () => rej(r.error);
+// ---- Custom icons from the site's icons folder (aries.png, rat.png ...); emoji until then ----
+const iconCache = {};
+function iconUrl(key){
+  if (!iconCache[key]) iconCache[key] = new Promise(res => {
+    const exts = ["png", "webp", "svg", "jpg", "jpeg"];
+    let i = 0;
+    const im = new Image();
+    im.onload = () => res(im.src);
+    im.onerror = () => { if (++i < exts.length) im.src = `icons/${key}.${exts[i]}`; else res(null); };
+    im.src = `icons/${key}.${exts[0]}`;
   });
-  return dbp;
+  return iconCache[key];
+}
+function icon(key, fallback){
+  const span = document.createElement("span");
+  span.className = "ico";
+  span.textContent = fallback;
+  iconUrl(key).then(u => {
+    if (!u) return;
+    const im = new Image();
+    im.src = u; im.alt = "";
+    span.replaceChildren(im);
+  });
+  return span;
 }
 
-function showStatus(msg){
-  const s = $("artStatus");
-  s.textContent = msg || "";
-  s.hidden = !msg;
-  if (msg) $("manage").open = true;
-}
-
-// Device art wins; otherwise try images/<number>.jpg from the site itself.
+// ---- Card art from the site's images folder (1.jpg, 2.jpeg, 3.png ...) ----
+let currentGame = null;
 function applyArt(g){
   currentGame = g;
-  const img = $("art"), local = art[g];
+  const img = $("art");
   const set = (on) => { img.hidden = !on; $("card").classList.toggle("has-art", on); };
-  $("cardArt").textContent = local ? "Change art for this game" : "Add art for this game";
-  const tries = local ? [local] : ["jpg", "jpeg", "png", "JPG", "JPEG", "PNG"].map(ext => `images/${g + 1}.${ext}`);
+  const tries = ["jpg", "jpeg", "png", "JPG", "JPEG", "PNG"].map(ext => `images/${g + 1}.${ext}`);
   let i = 0;
   img.onload = () => { if (currentGame === g) set(true); };
   img.onerror = () => {
@@ -345,103 +329,6 @@ function applyArt(g){
   set(false);
   img.src = tries[0];
 }
-
-function renderList(){
-  const ul = $("artlist");
-  ul.innerHTML = "";
-  GAMES.forEach((game, g) => {
-    const li = document.createElement("li");
-    const th = document.createElement(art[g] ? "img" : "div");
-    th.className = "thumb";
-    if (art[g]) { th.src = art[g]; th.alt = ""; }
-    const nm = document.createElement("span");
-    nm.className = "name";
-    nm.textContent = `${g + 1}. ${game[0]}`;
-    const btns = document.createElement("span");
-    btns.className = "btns";
-    const add = document.createElement("button");
-    add.type = "button"; add.className = "small";
-    add.textContent = art[g] ? "Change" : "Add";
-    add.addEventListener("click", () => pick(g));
-    btns.append(add);
-    if (art[g]) {
-      const rm = document.createElement("button");
-      rm.type = "button"; rm.className = "small"; rm.textContent = "Remove";
-      rm.addEventListener("click", () => saveArt(g, null));
-      btns.append(rm);
-    }
-    li.append(th, nm, btns);
-    ul.append(li);
-  });
-}
-
-async function loadArt(){
-  try {
-    const d = await db();
-    await new Promise((res, rej) => {
-      const tx = d.transaction("art", "readonly"), st = tx.objectStore("art");
-      for (let g = 0; g < 24; g++) {
-        const r = st.get(g);
-        r.onsuccess = () => { if (r.result) art[g] = r.result; };
-      }
-      tx.oncomplete = res;
-      tx.onerror = () => rej(tx.error);
-    });
-  } catch (e) { /* storage unavailable: art lasts for this visit only */ }
-  renderList();
-  if (currentGame !== null) applyArt(currentGame);
-}
-
-async function saveArt(g, url){
-  if (url) art[g] = url; else delete art[g];
-  renderList();
-  if (currentGame === g) applyArt(g);
-  showStatus("");
-  try {
-    const d = await db();
-    await new Promise((res, rej) => {
-      const tx = d.transaction("art", "readwrite"), st = tx.objectStore("art");
-      if (url) st.put(url, g); else st.delete(g);
-      tx.oncomplete = res;
-      tx.onerror = () => rej(tx.error);
-    });
-  } catch (e) {
-    showStatus("This image couldn’t be saved on this device. It will show until you close the page.");
-  }
-}
-
-function shrink(file){
-  return new Promise((res, rej) => {
-    const fr = new FileReader();
-    fr.onload = () => {
-      const im = new Image();
-      im.onload = () => {
-        const s = Math.min(1, 1000 / Math.max(im.width, im.height));
-        const c = document.createElement("canvas");
-        c.width = Math.round(im.width * s); c.height = Math.round(im.height * s);
-        c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
-        res(c.toDataURL("image/jpeg", 0.85));
-      };
-      im.onerror = () => rej(new Error("That file couldn’t be read as an image. Try a JPG or PNG."));
-      im.src = fr.result;
-    };
-    fr.onerror = () => rej(new Error("That file couldn’t be opened. Try choosing it again."));
-    fr.readAsDataURL(file);
-  });
-}
-
-function pick(g){ pickFor = g; $("picker").click(); }
-
-$("picker").addEventListener("change", async (e) => {
-  const f = e.target.files[0];
-  e.target.value = "";
-  if (!f || pickFor === null) return;
-  try { await saveArt(pickFor, await shrink(f)); }
-  catch (err) { showStatus(err.message); }
-});
-$("cardArt").addEventListener("click", () => { if (currentGame !== null) pick(currentGame); });
-
-loadArt();
 
 signSel.addEventListener("change", ()=>{ answer = null; render(); });
 yearSel.addEventListener("change", ()=>{ answer = null; render(); });
