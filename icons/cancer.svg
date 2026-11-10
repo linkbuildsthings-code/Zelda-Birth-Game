@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8"/>
+  <!-- Din: three wavy lines with curls -->
+  <path d="M45 65 Q65 45 85 65 Q105 85 125 65 Q145 45 155 65" fill="none" stroke="white" stroke-width="10" stroke-linecap="round"/>
+  <path d="M45 100 Q65 80 85 100 Q105 120 125 100 Q145 80 155 100" fill="none" stroke="white" stroke-width="10" stroke-linecap="round"/>
+  <path d="M45 135 Q65 115 85 135 Q105 155 125 135 Q145 115 155 135" fill="none" stroke="white" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="40" cy="55" r="7" fill="white"/>
+  <circle cx="40" cy="145" r="7" fill="white"/>
+  <circle cx="160" cy="55" r="7" fill="white"/>
+  <circle cx="160" cy="145" r="7" fill="white"/>
+</svg>

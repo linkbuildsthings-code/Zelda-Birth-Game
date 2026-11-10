@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8"/>
+  <!-- Gerudo - diamond with circles -->
+  <polygon points="100,40 140,100 100,160 60,100" fill="white"/>
+  <circle cx="80" cy="100" r="12" fill="none" stroke="white" stroke-width="6"/>
+  <circle cx="120" cy="100" r="12" fill="none" stroke="white" stroke-width="6"/>
+  <path d="M70 100 Q100 80 130 100 Q100 120 70 100" fill="none" stroke="white" stroke-width="6"/>
+</svg>

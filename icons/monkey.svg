@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8"/>
+  <!-- Terminian - complex crest simplified -->
+  <circle cx="100" cy="100" r="60" fill="none" stroke="white" stroke-width="6"/>
+  <path d="M60 80 Q100 40 140 80 L120 120 Q100 100 80 120 Z" fill="white"/>
+  <circle cx="100" cy="100" r="15" fill="white"/>
+  <path d="M80 140 Q100 160 120 140" fill="white"/>
+  <polygon points="100,50 110,70 90,70" fill="white"/>
+</svg>

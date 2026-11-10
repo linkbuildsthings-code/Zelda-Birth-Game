@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8"/>
+  <!-- Farore style: overlapping circles -->
+  <circle cx="100" cy="100" r="45" fill="white"/>
+  <circle cx="85" cy="90" r="35" fill="none" stroke="white" stroke-width="12"/>
+  <circle cx="115" cy="90" r="35" fill="none" stroke="white" stroke-width="12"/>
+  <circle cx="100" cy="115" r="30" fill="white"/>
+</svg>

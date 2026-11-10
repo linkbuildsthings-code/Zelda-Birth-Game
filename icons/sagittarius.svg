@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8"/>
+  <!-- Zigzag -->
+  <path d="M45 85 L75 60 L65 100 L95 75 L85 115 L115 90 L105 130 L135 105" fill="none" stroke="white" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

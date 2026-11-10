@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8"/>
+  <!-- Hylian Crest - winged -->
+  <path d="M40 80 Q60 50 80 75 L100 60 L120 75 Q140 50 160 80 L140 100 L100 140 L60 100 Z" fill="white"/>
+  <path d="M70 70 L100 40 L130 70 L120 85 L100 55 L80 85 Z" fill="white"/>
+  <polygon points="100,50 110,30 90,30" fill="white"/>
+  <path d="M90 140 L100 170 L110 140" fill="white"/>
+</svg>

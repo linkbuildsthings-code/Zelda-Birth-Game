@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="8"/>
+  <!-- Better swirl: 4 curved blades -->
+  <path d="M100 50 Q130 60 125 90 Q120 120 100 110 Q80 100 85 70 Q90 40 100 50" fill="white"/>
+  <path d="M100 50 Q70 60 75 90 Q80 120 100 110 Q120 100 115 70 Q110 40 100 50" fill="white"/>
+  <path d="M100 150 Q130 140 125 110 Q120 80 100 90 Q80 100 85 130 Q90 160 100 150" fill="white"/>
+  <path d="M100 150 Q70 140 75 110 Q80 80 100 90 Q120 100 115 130 Q110 160 100 150" fill="white"/>
+</svg>
